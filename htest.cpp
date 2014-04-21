@@ -299,14 +299,14 @@ encode(k,arr,0,cl);
 
 list.clear();
 cout<<"map 1"<<endl;
-Copycodes(t,arr,0,list);
+//Copycodes(t,arr,0,list);
 
 
-
+/*
 for(ii=list.begin(); ii!=list.end(); ++ii){
 cout<<ii->first<<" : "<<ii->second<<endl;
 }
-
+*/
 
 
 return 0;
