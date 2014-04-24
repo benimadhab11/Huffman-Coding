@@ -1,4 +1,6 @@
+#include<cstdlib>
 #include<iostream>
+#include<utility>
 #include<math.h>
 #include<vector>
 #include<queue>
@@ -31,7 +33,7 @@ deque<node *> trees;
 deque<node *>::iterator q;
 node* root=NULL;
 void printLevelOrder(node *root) ;
-
+void encode(node* k, string s, map<string,string> & final);
 node* cmt(node* test, node* min2){
 node* p = new node;
 p->freq=test->freq+min2->freq;
@@ -137,69 +139,49 @@ void Codes(node* t, int arr[], int top)
 }
  
 
-void Copycodes(node* t, int arr[], int top, map<string,int> list)
+void Copycodes(node* t, int arr[], int top, string ch)
 {
-    // Assign 0 to left edge and recur
     if (t->left)
     {
         arr[top] = 1;
-        Copycodes(t->left, arr, top + 1,list);
+        Copycodes(t->left, arr, top + 1,ch);
     }
  
-    // Assign 1 to right edge and recur
     if (t->right)
     {
         arr[top] = 0;
-        Copycodes(t->right, arr, top + 1,list);
+        Copycodes(t->right, arr, top + 1,ch);
     }
- int sum=0;
-    // If this is a leaf node, then it contains one of the input
-    // characters, print the character and its code from arr[]
-    if (t->left==NULL && t->right==NULL && strlen((t->c).c_str()))
+ 
+    if (t->left==NULL && t->right==NULL && strcmp((t->c).c_str(),ch.c_str())==1)
     {
-    cout<<t->c<<":";
-    for (int i = 0; i < top; ++i)
-    {sum+=(pow(10,i)*arr[i]);
-cout<<sum;
-list[t->c]=sum;
-    cout<<"\n";
-    }
+    for (int i = 0; i < top; ++i){
+	ch+= arr[i];
+	cout<<arr[i];
+
+    }cout<<ch;cout<<"\t";
+
 }
 }
 
 
 
-void encode(node* t, int arr[], int top,string cl)
+void encode(node* k, string s, map<string,string> & final)
 {
-    if (t->left )
-    {
-        arr[top] = 1;
-        encode(t->left, arr, top + 1,cl);
-    }
- 
-    // Assign 1 to right edge and recur
-    if (t->right )
-    {
-        arr[top] = 0;
-        encode(t->right, arr, top + 1,cl);
-    }
- 
-    // If this is a leaf node, then it contains one of the input
-    // characters, print the character and its code from arr[]
-    if (t->left==NULL && t->right==NULL && strcmp((t->c).c_str(),cl.c_str())==1)
-    {
-        
-    for (int i = 0; i < top; ++i)
-   cout<<"\n"; 
+  if(k!=NULL){
+	encode(k->left,s+"1",final); 
+	encode(k->right,s+"0",final); 
+	if(k->left==NULL && k->right==NULL)
+		final[k->c]=s;
 }
 }
 
 
 
 map<string,int>list;
+map<string,int>::iterator ii;
 int main(){
 
-map<string,int>::iterator ii;
 vector<string> store;
 string ch;
 fstream fin("text.txt", fstream::in);
@@ -289,24 +271,26 @@ Codes(t,arr,0);
 string cl;
 cout<<"the encoded\n\n";
 node* k;
-
+k=root;
+int l;
+/*
 for(int st=0;st<store.size();st++)
 {cl=store[st];
 k=root;
-encode(k,arr,0,cl);
-}
-
-
-list.clear();
-cout<<"map 1"<<endl;
-//Copycodes(t,arr,0,list);
-
-
-/*
-for(ii=list.begin(); ii!=list.end(); ++ii){
-cout<<ii->first<<" : "<<ii->second<<endl;
+encode(k,arr,0,cl,l);
 }
 */
+
+map<string,string>final;
+map<string,string>::iterator fi;
+cout<<"huffman codes"<<endl;
+
+string g;
+encode(k,g,final);
+
+for(fi=final.begin(); fi!=final.end(); ++fi){
+cout<<fi->first<<" : "<<fi->second<<endl;
+}
 
 
 return 0;
