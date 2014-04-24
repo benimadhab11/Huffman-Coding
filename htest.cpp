@@ -8,8 +8,6 @@
 #include<cstring>
 #include<map>
 #include<algorithm>
-#include<deque>
-#include<vector>
 
 using namespace std;
 
@@ -29,34 +27,9 @@ struct node_comparison
 priority_queue<node *, vector<node *>,node_comparison > pq;
 
 
-deque<node *> trees;
-deque<node *>::iterator q;
 node* root=NULL;
 void printLevelOrder(node *root) ;
 void encode(node* k, string s, map<string,string> & final);
-node* cmt(node* test, node* min2){
-node* p = new node;
-p->freq=test->freq+min2->freq;
-cout<<"p1->fre "<<p->freq<<"\t";
-p->c=test->c+min2->c;
-cout<<"p1->c "<<p->c<<endl;
-if(root==NULL){
-p->left=test;
-p->right=min2;
-root=p;
-return p;
-}
-else{
-p->left=test;
-p->right=min2;
-
-}
-root=p;
-return p;
-}
-
-
-
 
 
 void inorder(node* root){
@@ -71,21 +44,6 @@ temp=root;
 	}
 }
 
-void inorder1(node* root){
-node* temp;
-temp=root;
-
-		cout << temp->c <<" : "<<temp->freq<<endl;
-		cout << temp->left->c <<" : "<<temp->left->freq<<endl;
-	cout << temp->right->c <<" : "<<temp->right->freq<<endl;
-//		cout << temp->left->left->c <<" : "<<temp->left->left->freq<<endl;
-		cout << temp->left->right->c <<" : "<<temp->left->right->freq<<endl;
-		cout << temp->right->left->c <<" : "<<temp->right->left->freq<<endl;
-		cout << temp->right->right->c <<" : "<<temp->right->right->freq<<endl;
-}
-
-
-
 
 
 
@@ -98,7 +56,6 @@ n->freq=x;
 n->c=a;
 n->left=NULL;
 n->right=NULL;
-trees.push_back(n);
 pq.push(n);
 }
 
@@ -137,34 +94,6 @@ void Codes(node* t, int arr[], int top)
     cout<<"\n";
     }
 }
- 
-
-void Copycodes(node* t, int arr[], int top, string ch)
-{
-    if (t->left)
-    {
-        arr[top] = 1;
-        Copycodes(t->left, arr, top + 1,ch);
-    }
- 
-    if (t->right)
-    {
-        arr[top] = 0;
-        Copycodes(t->right, arr, top + 1,ch);
-    }
- 
-    if (t->left==NULL && t->right==NULL && strcmp((t->c).c_str(),ch.c_str())==1)
-    {
-    for (int i = 0; i < top; ++i){
-	ch+= arr[i];
-	cout<<arr[i];
-
-    }cout<<ch;cout<<"\t";
-
-}
-}
-
-
 
 void encode(node* k, string s, map<string,string> & final)
 {
@@ -182,13 +111,10 @@ map<string,int>list;
 map<string,int>::iterator ii;
 int main(){
 
-vector<string> store;
 string ch;
 fstream fin("text.txt", fstream::in);
 while (fin >> ch) {
 ++list[ch];
-
-store.push_back(ch);
 }
 
 
@@ -210,21 +136,6 @@ a=ii->first;
 x=ii->second;
 createtrees(x,a);
 }
-
-cout<<"the queue"<<endl;
-
-for(int l=0;l<trees.size();l++){
-cout<<trees[l]->c<<"\t"<<trees[l]->freq<<endl;
-}
-
-
-sort(trees.begin(),trees.end(),compare);
-cout<<"after sorting\n";
-for(int l=0;l<trees.size();l++){
-cout<<trees[l]->c<<"\t"<<trees[l]->freq<<endl;
-}
-
-
 
 cout<<"\n \n \n";
 
@@ -267,20 +178,13 @@ string s;
 int f;
 node* t;
 t=root;
+
+cout<<"the tree traversal codes\n\n";
 Codes(t,arr,0);
 string cl;
-cout<<"the encoded\n\n";
 node* k;
 k=root;
 int l;
-/*
-for(int st=0;st<store.size();st++)
-{cl=store[st];
-k=root;
-encode(k,arr,0,cl,l);
-}
-*/
-
 map<string,string>final;
 map<string,string>::iterator fi;
 cout<<"huffman codes"<<endl;
@@ -292,7 +196,15 @@ for(fi=final.begin(); fi!=final.end(); ++fi){
 cout<<fi->first<<" : "<<fi->second<<endl;
 }
 
+while (fin >> ch) {
 
+for(fi=final.begin(); fi!=final.end(); ++fi){
+if(ch==fi->first)
+cout<<"yes";
+}
+
+
+}
 return 0;
 }
 
