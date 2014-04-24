@@ -5,7 +5,7 @@
 #include<vector>
 #include<queue>
 #include<fstream>
-#include<cstring>
+#include<string>
 #include<map>
 #include<algorithm>
 
@@ -13,7 +13,7 @@ using namespace std;
 
 struct node{
 int freq;
-string c;
+char c;
 node* left;
 node* right;
 };
@@ -29,7 +29,6 @@ priority_queue<node *, vector<node *>,node_comparison > pq;
 
 node* root=NULL;
 void printLevelOrder(node *root) ;
-void encode(node* k, string s, map<string,string> & final);
 
 
 void inorder(node* root){
@@ -50,7 +49,7 @@ temp=root;
 
 
 
-void createtrees(int x , string a){
+void createtrees(int x , char a){
 node* n = new node;
 n->freq=x;
 n->c=a;
@@ -86,7 +85,7 @@ void Codes(node* t, int arr[], int top)
  
     // If this is a leaf node, then it contains one of the input
     // characters, print the character and its code from arr[]
-    if (t->left==NULL && t->right==NULL && strlen((t->c).c_str()))
+    if (t->left==NULL && t->right==NULL)
     {
     cout<<t->c<<":";
     for (int i = 0; i < top; ++i)
@@ -95,7 +94,7 @@ void Codes(node* t, int arr[], int top)
     }
 }
 
-void encode(node* k, string s, map<string,string> & final)
+void encode(node* k, string s, map<char,string> & final)
 {
   if(k!=NULL){
 	encode(k->left,s+"1",final); 
@@ -107,15 +106,37 @@ void encode(node* k, string s, map<string,string> & final)
 
 
 
-map<string,int>list;
-map<string,int>::iterator ii;
+map<char,int>list;
+map<char,int>::iterator ii;
 int main(){
 
-string ch;
+char ch;/*
 fstream fin("text.txt", fstream::in);
 while (fin >> ch) {
 ++list[ch];
-}
+}*/
+
+cout<<"map 2"<<endl;
+
+fstream inText( "text.txt", ios::in );
+   map<char, int> list;
+   //Count letters
+   while( ( ch = inText.get() ) && inText.good() )
+      ++list[ch];
+   //Display counted letters
+   for( map<char, int>::iterator tt = list.begin(); tt != list.end(); ++tt )
+    //  if( it->first == '\n' )
+      //   cout << "New lines: " << it->second << " times\n";
+      //else
+         cout << "'" << tt->first << "'" << ": " << tt->second << " times\n";
+
+
+
+
+
+
+
+
 
 
 
@@ -129,7 +150,9 @@ cout<<ii->first<<" : "<<ii->second<<endl;
 
 
 
-int x;string a;
+
+
+int x;char a;
 
 for(ii=list.begin(); ii!=list.end(); ++ii){
 a=ii->first;
@@ -142,7 +165,7 @@ cout<<"\n \n \n";
 
 int tempx;
 node* cur;
-string tempc;
+char tempc;
 int m=0;
 while(pq.size()>1){
 
@@ -174,19 +197,19 @@ inorder(root);
 cout<<"\n\n\n\n";
 cout<<"\n\n\n\n";
 int arr[100];
-string s;
+char s;
 int f;
 node* t;
 t=root;
 
 cout<<"the tree traversal codes\n\n";
 Codes(t,arr,0);
-string cl;
+char cl;
 node* k;
 k=root;
 int l;
-map<string,string>final;
-map<string,string>::iterator fi;
+map<char,string>final;
+map<char,string>::iterator fi;
 cout<<"huffman codes"<<endl;
 
 string g;
@@ -196,15 +219,8 @@ for(fi=final.begin(); fi!=final.end(); ++fi){
 cout<<fi->first<<" : "<<fi->second<<endl;
 }
 
-while (fin >> ch) {
-
-for(fi=final.begin(); fi!=final.end(); ++fi){
-if(ch==fi->first)
-cout<<"yes";
-}
 
 
-}
 return 0;
 }
 
