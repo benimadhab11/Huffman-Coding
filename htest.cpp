@@ -106,7 +106,6 @@ void encode(node* k, string s, map<char,string> & final)
 
 
 
-map<char,int>list;
 map<char,int>::iterator ii;
 int main(){
 
@@ -119,26 +118,20 @@ while (fin >> ch) {
 cout<<"map 2"<<endl;
 
 fstream inText( "text.txt", ios::in );
-   map<char, int> list;
+map<char, int> list;
    //Count letters
-   while( ( ch = inText.get() ) && inText.good() )
-      ++list[ch];
-   //Display counted letters
-   for( map<char, int>::iterator tt = list.begin(); tt != list.end(); ++tt )
+string test="";
+while( ( ch = inText.get() ) && inText.good() )
+{
+test=test+ch;
+++list[ch];
+}   //Display counted letters
+for( map<char, int>::iterator tt = list.begin(); tt != list.end(); ++tt )
     //  if( it->first == '\n' )
       //   cout << "New lines: " << it->second << " times\n";
       //else
-         cout << "'" << tt->first << "'" << ": " << tt->second << " times\n";
-
-
-
-
-
-
-
-
-
-
+cout << "'" << tt->first << "'" << ": " << tt->second << " times\n";
+cout<<"\ntest\n";
 
 
 
@@ -210,18 +203,47 @@ k=root;
 int l;
 map<char,string>final;
 map<char,string>::iterator fi;
-cout<<"huffman codes"<<endl;
+cout<<"huffman codes\n"<<endl;
 
 string g;
 encode(k,g,final);
-
 for(fi=final.begin(); fi!=final.end(); ++fi){
-cout<<fi->first<<" : "<<fi->second<<endl;
+cout<<fi->first<<":"<<fi->second<<endl;
+}
+string decode="";
+
+cout<<"\n \n \nencoding. . .\n\n\n";
+for(int kkk=0;kkk<test.size();kkk++){
+for(fi=final.begin(); fi!=final.end(); ++fi){
+if(test[kkk]==(*fi).first){
+decode=decode+fi->second;
+}
+}
 }
 
+cout<<decode;
+
+string encode="";
+string temp="";
+cout<<"\n\n\n";
+cout<<"decoding . . .\n";
+for(int j=0;j<decode.size();j++){
+temp=temp+decode[j];
+for(fi=final.begin(); fi!=final.end(); ++fi){
+if(temp==(*fi).second){
+cout<<fi->first;
+temp="";
+break;
+}
+
+}
+}
+
+cout<<encode;
 
 
-return 0;
+
+   return 0;
 }
 
 
